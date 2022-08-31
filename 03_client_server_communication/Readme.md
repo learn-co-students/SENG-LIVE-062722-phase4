@@ -15,3 +15,21 @@ https://unsplash.com/photos/POd35V_uE4k
 Published on February 16, 2018
 Free to use under the Unsplash License
 Dancer: Olivia Tarchick
+
+
+# Why do we want validations?
+- we dont bad data stored in our database 
+
+# Validation helpers:
+
+presence
+uniqueness
+comparison 
+length
+acceptance
+inclusion/exclusion 
+
+# where are validations defined?
+- define validtions in our model
+
+# when do validations occur?
