@@ -20,11 +20,34 @@ function ProductionForm({ addProduction }) {
   function onSubmit(e) {
     e.preventDefault();
     //POST '/productions'
+    fetch('/productions', {
+      method: "POST",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(resp => {
+      if (resp.ok){
+        resp.json()
+        .then(production => addProduction(production))
+      } else if (resp.status === 404){
+        setErrors("404")
+      } else {
+        resp.json().then(data => {
+          setErrors(data.errors)
+        })
+      }
+    })
+  }
+
+  if (errors === "404") {
+    return <img src="https://cdn.mos.cms.futurecdn.net/PuXipAW3AXUzUJ4uYyxPKC-1200-80.jpg" alt="404 error page" />
   }
 
   return (
     <div className="App">
-      {errors ? errors.map((e) => <div>{e}</div>) : null}
       <Form onSubmit={onSubmit}>
         <label>Title </label>
         <input
@@ -78,6 +101,7 @@ function ProductionForm({ addProduction }) {
 
         <input type="submit" value="Update Production" />
       </Form>
+      {errors ? errors.map((e) => <div>{e}</div>) : null}
     </div>
   );
 }

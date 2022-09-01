@@ -4,6 +4,7 @@ class ProductionsController < ApplicationController
         render json: Production.all, status: :ok
     end
 
+    # GET '/productions/:id'
     def show
         production = Production.find(params[:id])
         render json: production, status: :ok

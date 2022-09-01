@@ -13,11 +13,17 @@ function App() {
   const [errors, setErrors] = useState(false);
 
   useEffect(() => {
-    fetch("/productions").then((res) => {
+    fetch("/productions")
+    .then((res) => {
+      console.log("response:", res)
       if (res.ok) {
-        res.json().then(setProductions);
+        res.json().then(setProductions);  // ES6
+        // productions => setProductions(productions)
       } else {
-        res.json().then((data) => setErrors(data.error));
+        res.json().then((data) => {
+          setErrors(data.error)
+        })
+        ;
       }
     });
   }, []);

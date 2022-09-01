@@ -7,7 +7,8 @@ function ProductionDetail({deleteProduction}) {
   const [errors, setErrors] = useState([])
   
   const params = useParams()
-  const history = useHistory()
+  console.log(params)
+  const history = useHistory() //.push() you can use to redirect the user
   useEffect(()=>{
     //GET to '/productions/:id'
     fetch(`/productions/${params.id}`)
@@ -38,6 +39,8 @@ function ProductionDetail({deleteProduction}) {
               <p>{genre}</p>
               <h3>Description:</h3>
               <p>{description}</p>
+              <h3>Budget:</h3>
+              <p>{budget}</p>
               <h2>Crew Memebers</h2>
               <ul>
                 {crew_members.map(crew => <li>{crew}</li>)}

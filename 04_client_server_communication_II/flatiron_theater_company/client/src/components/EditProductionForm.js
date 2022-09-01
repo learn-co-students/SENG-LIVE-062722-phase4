@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 function EditProductionForm({ updateProduction }) {
@@ -13,6 +13,7 @@ function EditProductionForm({ updateProduction }) {
     description: "",
   });
   const { id } = useParams();
+  const history = useHistory()
   useEffect(() => {
     fetch(`/productions/${id}`)
       .then((res) => res.json())
@@ -24,9 +25,24 @@ function EditProductionForm({ updateProduction }) {
     setFormData({ ...formData, [name]: value });
   };
 
+  // which controller/action does this request go to: productions#update
   function onSubmit(e) {
     e.preventDefault();
-    //PATCH to `/productions/${id}`
+    fetch(`/productions/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'Application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(resp => {
+      if (resp.ok){
+        resp.json().then(updateProduction)
+        history.push(`/productions/${id}`) // redirect back to details page
+      } else {
+        resp.json().then(data => setErrors(data.errors))
+      }
+    }) 
   }
   return (
     <div className="App">
