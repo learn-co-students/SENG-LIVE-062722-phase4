@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::API
+    include ActionController::Cookies
+    
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+
+    # checking to see if there is a current user 
+
+    def current_user 
+        @current_user ||= User.find(session[:user_id]) #memoization
+    end 
 
 
     def render_unprocessable_entity(invalid)

@@ -1,6 +1,7 @@
 class TicketsController < ApplicationController
     def create
         ticket = Ticket.create(ticket_params)
+        current_user.tickets << ticket 
         render json: ticket, status: :created
     end 
     private
@@ -9,3 +10,5 @@ class TicketsController < ApplicationController
         params.permit(:production_id, :user_id, :price)
     end 
 end
+
+

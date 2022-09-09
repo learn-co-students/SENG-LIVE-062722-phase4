@@ -26,6 +26,7 @@ function Login() {
           body:JSON.stringify(user)
         })
         .then(res => {
+            console.log(res)
             if(res.ok){
                 res.json().then(user => {
                     history.push(`/users/${user.id}`)
@@ -50,9 +51,9 @@ function Login() {
         <input type='text' name='name' value={name} onChange={handleChange} />
       
         <label>
-         Email
+         Password
          </label>
-        <input type='text' name='email' value={email} onChange={handleChange} />
+        <input type='text' name='password' value={password} onChange={handleChange} />
        
        
         <input type='submit' value='Log in!' />
